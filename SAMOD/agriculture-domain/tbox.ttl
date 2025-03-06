@@ -24,6 +24,12 @@ vann:preferredNamespacePrefix rdf:type owl:AnnotationProperty .
 #    Object Properties
 #################################################################
 
+###  https://was-course.interactions.ics.unisg.ch/farm-ontology#hasCoordinates
+was:hasCoordinates rdf:type owl:ObjectProperty ;
+                   rdfs:domain was:LandSection ;
+                   rdfs:range was:Coordinates .
+
+
 ###  https://was-course.interactions.ics.unisg.ch/farm-ontology#hasCrop
 was:hasCrop rdf:type owl:ObjectProperty ;
             rdfs:domain was:LandSection ;
