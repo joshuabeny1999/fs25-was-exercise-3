@@ -1,0 +1,171 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <https://was-course.interactions.ics.unisg.ch/farm-ontology#> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#farm-91af956f-7e44-4a79-bce0-dbe0200df00e>
+  a :Farm;
+  :hasLandSection <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#landSection1>,
+    <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#landSection2>,
+    <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#landSection3>,
+    <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#landSection4>;
+  <https://purl.org/hmas/contains> <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#tractor-03c517cb-d51b-4042-86b9-3cd277144506>,
+    <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#tractor-e9a665fb-2d87-43d7-8ce5-89698d06e948> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#tractor-03c517cb-d51b-4042-86b9-3cd277144506>
+  a :Tractor, <https://www.w3.org/2019/wot/td#Thing>;
+  :operatedBy <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#agentMonitor>;
+  <https://www.w3.org/2019/wot/td#title> "A tractor that can be used for monitoring the moisture level of soil in a farm.";
+  <https://www.w3.org/2019/wot/td#hasSecurityConfiguration> _:node67;
+  <https://www.w3.org/2019/wot/td#hasBase> <http://localhost:1080/api/tractors/1/>;
+  <https://www.w3.org/2019/wot/td#hasActionAffordance> _:node68;
+  <https://purl.org/hmas/hasProfile> <https://raw.githubusercontent.com/Interactions-HSG/example-tds/was/tds/tractor1.ttl> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#tractor-e9a665fb-2d87-43d7-8ce5-89698d06e948>
+  a :Tractor, <https://www.w3.org/2019/wot/td#Thing>;
+  :operatedBy <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#agentIrrigator>;
+  <https://www.w3.org/2019/wot/td#title> "A tractor that can be used for irrigating sections in a farm.";
+  <https://www.w3.org/2019/wot/td#hasSecurityConfiguration> _:node73;
+  <https://www.w3.org/2019/wot/td#hasBase> <http://localhost:1080/api/tractors/2/>;
+  <https://www.w3.org/2019/wot/td#hasActionAffordance> _:node74;
+  <https://purl.org/hmas/hasProfile> <https://raw.githubusercontent.com/Interactions-HSG/example-tds/was/tds/tractor2.ttl> .
+
+_:node67 a <https://www.w3.org/2019/wot/security#NoSecurityScheme> .
+
+_:node68 a :ReadSoilMoistureAffordance, <https://www.w3.org/2019/wot/td#ActionAffordance>;
+  <https://www.w3.org/2019/wot/td#name> "Read Moisture Level";
+  <https://www.w3.org/2019/wot/td#hasForm> _:node69;
+  <https://www.w3.org/2019/wot/td#hasInputSchema> _:node70;
+  <https://www.w3.org/2019/wot/td#hasOutputSchema> _:node72 .
+
+_:node70 a :Coordinates, <https://www.w3.org/2019/wot/json-schema#ArraySchema>;
+  <https://www.w3.org/2019/wot/json-schema#minItems> "4"^^xsd:int;
+  <https://www.w3.org/2019/wot/json-schema#maxItems> "4"^^xsd:int;
+  <https://www.w3.org/2019/wot/json-schema#items> _:node71 .
+
+_:node71 a <https://www.w3.org/2019/wot/json-schema#IntegerSchema>;
+  <https://www.w3.org/2019/wot/json-schema#minimum> "0"^^xsd:int;
+  <https://www.w3.org/2019/wot/json-schema#maximum> "2"^^xsd:int .
+
+_:node72 a :SoilMoisture, <https://www.w3.org/2019/wot/json-schema#IntegerSchema> .
+
+_:node73 a <https://www.w3.org/2019/wot/security#NoSecurityScheme> .
+
+_:node74 a :IrrigateAffordance, <https://www.w3.org/2019/wot/td#ActionAffordance>;
+  <https://www.w3.org/2019/wot/td#name> "Irrigate";
+  <https://www.w3.org/2019/wot/td#hasForm> _:node75;
+  <https://www.w3.org/2019/wot/td#hasInputSchema> _:node76 .
+
+_:node76 a :Coordinates, <https://www.w3.org/2019/wot/json-schema#ArraySchema>;
+  <https://www.w3.org/2019/wot/json-schema#minItems> "4"^^xsd:int;
+  <https://www.w3.org/2019/wot/json-schema#maxItems> "4"^^xsd:int;
+  <https://www.w3.org/2019/wot/json-schema#items> _:node77 .
+
+_:node77 a <https://www.w3.org/2019/wot/json-schema#IntegerSchema>;
+  <https://www.w3.org/2019/wot/json-schema#minimum> "0"^^xsd:int;
+  <https://www.w3.org/2019/wot/json-schema#maximum> "2"^^xsd:int .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#landSection1>
+  a :LandSection;
+  :hasCoordinates <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#coordinates1>;
+  :hasCrop <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#cropWheat1> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#landSection2>
+  a :LandSection;
+  :hasCoordinates <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#coordinates2>;
+  :hasCrop <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#cropWheat2> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#landSection3>
+  a :LandSection;
+  :hasCoordinates <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#coordinates3>;
+  :hasCrop <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#cropCorn1> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#landSection4>
+  a :LandSection;
+  :hasCoordinates <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#coordinates4>;
+  :hasCrop <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#cropCorn2> .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#cropWheat1>
+  a :Wheat;
+  :requiredMoistureLevel 120 .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#coordinates1>
+  a :Coordinates;
+  :hasCoordinateX1 0.0;
+  :hasCoordinateY1 0.0;
+  :hasCoordinateY2 1.0;
+  :hasCoordinateX2 1.0 .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#cropWheat2>
+  a :Wheat;
+  :requiredMoistureLevel 120 .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#coordinates2>
+  a :Coordinates;
+  :hasCoordinateX1 1.0;
+  :hasCoordinateY1 0.0;
+  :hasCoordinateY2 1.0;
+  :hasCoordinateX2 2.0 .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#cropCorn1>
+  a :Corn;
+  :requiredMoistureLevel 80 .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#coordinates3>
+  a :Coordinates;
+  :hasCoordinateX1 0.0;
+  :hasCoordinateY1 1.0;
+  :hasCoordinateY2 2.0;
+  :hasCoordinateX2 1.0 .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#cropCorn2>
+  a :Corn;
+  :requiredMoistureLevel 80 .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#coordinates4>
+  a :Coordinates;
+  :hasCoordinateX1 1.0;
+  :hasCoordinateY1 1.0;
+  :hasCoordinateY2 2.0;
+  :hasCoordinateX2 2.0 .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#agentMonitor>
+  a :AutonomousAgent;
+  rdfs:comment "Agent that monitors soil moisture levels." .
+
+<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#agentIrrigator>
+  a :AutonomousAgent;
+  rdfs:comment "Agent that irrigates the land sections." .
+
+_:node69 <http://www.w3.org/2011/http#methodName> "GET";
+  <https://www.w3.org/2019/wot/hypermedia#hasTarget> <http://localhost:1080/api/tractors/1/moisture>;
+  <https://www.w3.org/2019/wot/hypermedia#forContentType> "application/json";
+  <https://www.w3.org/2019/wot/hypermedia#hasOperationType> <https://www.w3.org/2019/wot/td#invokeAction> .
+
+_:node75 <http://www.w3.org/2011/http#methodName> "PUT";
+  <https://www.w3.org/2019/wot/hypermedia#hasTarget> <http://localhost:1080/api/tractors/2/sprayer>;
+  <https://www.w3.org/2019/wot/hypermedia#forContentType> "application/json";
+  <https://www.w3.org/2019/wot/hypermedia#hasOperationType> <https://www.w3.org/2019/wot/td#invokeAction> .
