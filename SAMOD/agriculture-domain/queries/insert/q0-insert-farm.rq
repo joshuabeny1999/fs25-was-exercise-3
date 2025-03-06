@@ -1,10 +1,10 @@
 PREFIX was: <https://was-course.interactions.ics.unisg.ch/farm-ontology#>
 
 INSERT {
-    GRAPH <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-alessandro#>
+    GRAPH <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#>
     {
         ?newFarm a was:Farm.
     }.
 } WHERE {
-	BIND(IRI(CONCAT("https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-danai#farm-", strUUID())) AS ?newFarm)
+	BIND(IRI(CONCAT("https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#farm-", strUUID())) AS ?newFarm)
 }

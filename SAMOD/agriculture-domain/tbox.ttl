@@ -44,8 +44,8 @@ was:hasLandSection rdf:type owl:ObjectProperty ;
                    rdfs:comment "Connects a farm to its individual land sections" .
 
 
-###  https://was-course.interactions.ics.unisg.ch/farm-ontology#offersAffordance
-was:offersAffordance rdf:type owl:ObjectProperty ;
+###  https://was-course.interactions.ics.unisg.ch/farm-ontology#hasActionAffordance
+was:hasActionAffordance rdf:type owl:ObjectProperty ;
                      rdfs:domain was:Tractor ;
                      rdfs:range was:Affordance .
 

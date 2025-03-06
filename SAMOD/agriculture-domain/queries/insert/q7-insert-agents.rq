@@ -1,0 +1,13 @@
+PREFIX ex: <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#>
+PREFIX was: <https://was-course.interactions.ics.unisg.ch/farm-ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+INSERT {
+  GRAPH <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#> {
+    ex:agentMonitor a was:AutonomousAgent ;
+                    rdfs:comment "Agent that monitors soil moisture levels." .
+    ex:agentIrrigator a was:AutonomousAgent ;
+                      rdfs:comment "Agent that irrigates the land sections." .
+  }
+}
+WHERE {}

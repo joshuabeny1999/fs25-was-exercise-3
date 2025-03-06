@@ -1,0 +1,14 @@
+PREFIX ex: <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#>
+PREFIX was: <https://was-course.interactions.ics.unisg.ch/farm-ontology#>
+
+INSERT {
+  GRAPH <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#> {
+    # Tractor #1 operated by agentMonitor
+    ex:tractor-03c517cb-d51b-4042-86b9-3cd277144506 was:operatedBy ex:agentMonitor .
+
+    # Tractor #2 operated by agentIrrigator
+    ex:tractor-e9a665fb-2d87-43d7-8ce5-89698d06e948 was:operatedBy ex:agentIrrigator .
+  }
+}
+WHERE {
+}

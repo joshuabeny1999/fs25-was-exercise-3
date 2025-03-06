@@ -2,8 +2,8 @@ PREFIX was: <https://was-course.interactions.ics.unisg.ch/farm-ontology#>
 PREFIX hmas: <https://purl.org/hmas/>
 
 SELECT ?tractor WHERE {
-GRAPH <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-alessandro#> {
-   bind (<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-danai#farm-17c04810-567a-4236-b310-611bb4fd2a8c> as ?farm)
+GRAPH <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#> {
+   bind (<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#farm-91af956f-7e44-4a79-bce0-dbe0200df00e> as ?farm)
    ?farm a was:Farm.    
    ?farm hmas:contains ?tractor.
    ?tractor a was:Tractor.

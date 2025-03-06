@@ -1,0 +1,9 @@
+PREFIX ex: <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#>
+PREFIX was: <https://was-course.interactions.ics.unisg.ch/farm-ontology#>
+
+SELECT ?crop WHERE {
+  GRAPH <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#> {
+    BIND(<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#landSection1> AS ?section)
+    ?section was:hasCrop ?crop.
+  }
+}

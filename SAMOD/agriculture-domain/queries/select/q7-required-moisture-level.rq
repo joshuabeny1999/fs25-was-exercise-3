@@ -1,0 +1,10 @@
+PREFIX ex: <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#>
+PREFIX was: <https://was-course.interactions.ics.unisg.ch/farm-ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?level WHERE {
+  GRAPH <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#> {
+    BIND(<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#cropWheat1> AS ?crop)
+    ?crop was:requiredMoistureLevel ?level.
+  }
+}

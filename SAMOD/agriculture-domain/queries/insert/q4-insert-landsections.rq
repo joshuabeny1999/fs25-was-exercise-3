@@ -1,0 +1,27 @@
+PREFIX ex: <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#>
+PREFIX was: <https://was-course.interactions.ics.unisg.ch/farm-ontology#>
+
+INSERT {
+  GRAPH <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#> {
+    ?farm was:hasLandSection ex:landSection1, ex:landSection2, ex:landSection3, ex:landSection4 .
+
+    ex:landSection1 a was:LandSection ;
+                     was:hasCrop ex:cropWheat1 ;
+                     was:hasCoordinates ex:coordinates1 .
+
+    ex:landSection2 a was:LandSection ;
+                     was:hasCrop ex:cropWheat2 ;
+                     was:hasCoordinates ex:coordinates2 .
+
+    ex:landSection3 a was:LandSection ;
+                     was:hasCrop ex:cropCorn1 ;
+                     was:hasCoordinates ex:coordinates3 .
+
+    ex:landSection4 a was:LandSection ;
+                     was:hasCrop ex:cropCorn2 ;
+                     was:hasCoordinates ex:coordinates4 .
+  }
+}
+WHERE {
+  ?farm a was:Farm.
+}
