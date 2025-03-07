@@ -27,7 +27,7 @@ repo_location("http://localhost:7200/repositories/joshua-smartfarm").
 
 +!irrigate(Coordinates) : low_moisture(Coordinates)[source(Agent)] <-
     .print("Irrigating ", Coordinates);
-    invokeAction("https://was-course.interactions.ics.unisg.ch/farm-ontology#IrrigateAffordance", ["https://www.w3.org/2019/wot/json-schema#ArraySchema"], Coordinates)[artifact_id(TractorId)];
+    invokeAction("https://was-course.interactions.ics.unisg.ch/farm-ontology#IrrigateAffordance", [], Coordinates)[artifact_id(TractorId)];
     -low_moisture(Coordinates)[source(Agent)].
 
 

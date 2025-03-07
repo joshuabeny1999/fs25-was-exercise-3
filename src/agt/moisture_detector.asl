@@ -39,7 +39,7 @@ repo_location("http://localhost:7200/repositories/joshua-smartfarm").
     querySectionCoordinates(Section, Coordinates);
     .print("Queried coordinates [X1,Y1,X2,Y2] of section: ", Coordinates);
 
-    invokeAction("https://was-course.interactions.ics.unisg.ch/farm-ontology#ReadSoilMoistureAffordance", ["https://www.w3.org/2019/wot/json-schema#ArraySchema"], Coordinates, ["https://was-course.interactions.ics.unisg.ch/farm-ontology#SoilMoisture"], CurrentMoistureLevel);
+    invokeAction("https://was-course.interactions.ics.unisg.ch/farm-ontology#ReadSoilMoistureAffordance", [], Coordinates, CurrentMoistureLevel);
     .print("Read moisture in section: ", CurrentMoistureLevel);
 
     queryCropOfSection(Section, Crop);
