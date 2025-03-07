@@ -18,166 +18,144 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-
 public class FarmKG extends Artifact {
 
-    private static final String USERNAME = "danai";
-    private static final String PASSWORD = "danai24";
+    private static final String USERNAME = "joshua";
+    private static final String PASSWORD = "joshua25";
 
     private String repoLocation;
 
-    private static String PREFIXES = "PREFIX was: <https://was-course.interactions.ics.unisg.ch/farm-ontology#>\n"+
-    "PREFIX hmas: <https://purl.org/hmas/>\n" +
-    "PREFIX td: <https://www.w3.org/2019/wot/td#>\n";
-    
+    private static String PREFIXES = "PREFIX was: <https://was-course.interactions.ics.unisg.ch/farm-ontology#>\n" +
+            "PREFIX hmas: <https://purl.org/hmas/>\n" +
+            "PREFIX td: <https://www.w3.org/2019/wot/td#>\n";
 
     public void init(String repoLocation) {
         this.repoLocation = repoLocation;
     }
 
     @OPERATION
-    public void queryFarm(OpFeedbackParam<String> farm){
-        // the variable where we will store the result to be returned to the agent
+    public void queryFarm(OpFeedbackParam<String> farm) {
         String farmValue = null;
-
-        // sets your variable name for the farm to be queried
         String farmVariableName = "farm";
-
-        // constructs query
+        // Query all farms (assumes data is in the default graph)
         String queryStr = PREFIXES + "SELECT ?" + farmVariableName + " WHERE { ?" + farmVariableName + " a was:Farm. }";
-
-        /* Example SPARQL query 
-         * PREFIX was: <https://was-course.interactions.ics.unisg.ch/farm-ontology#>
-         * PREFIX hmas: <https://purl.org/hmas/>
-         * PREFIX td: <https://www.w3.org/2019/wot/td#>
-         * SELECT ?farm WHERE { ?farm a was:Farm. }
-         */
-
-        // executes query
         JsonArray farmBindings = executeQuery(queryStr);
-        
-        /* Example JSON result
-         * [{"farm":
-         *  {
-         *   "type":"uri",
-         *   "value":"https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-danai#farm-17c04810-567a-4236-b310-611bb4fd2a8c"
-         *  }
-         * }]
-         */
-
-        // handles result as JSON object
-        JsonObject firstBinding = farmBindings.get(0).getAsJsonObject();
-        JsonObject farmBinding = firstBinding.getAsJsonObject(farmVariableName);
-        farmValue = farmBinding.getAsJsonPrimitive("value").getAsString();
-
-        // sets the value of interest to the OpFeedbackParam
+        if (farmBindings.size() > 0) {
+            JsonObject firstBinding = farmBindings.get(0).getAsJsonObject();
+            JsonObject farmBinding = firstBinding.getAsJsonObject(farmVariableName);
+            farmValue = farmBinding.getAsJsonPrimitive("value").getAsString();
+        } else {
+            farmValue = "No farm found";
+        }
         farm.set(farmValue);
     }
 
-
-    @OPERATION 
+    @OPERATION
     public void queryThing(String farm, String offeredAffordance, OpFeedbackParam<String> thingDescription) {
-        // the variable where we will store the result to be returned to the agent
-        String tdValue = null; 
-
-        // sets your variable name for the farm to be queried
+        String tdValue = null;
         String tdVariableName = "td";
-
-        // constructs query
-        String queryStr = PREFIXES + "SELECT ?" + tdVariableName + " WHERE {\n" + 
-            "<" + farm + "> hmas:contains ?thing.\n" +
-            "?thing td:hasActionAffordance ?aff.\n" +
-            "?thing hmas:hasProfile ?" + tdVariableName + ".\n" +
-            "?aff a <" + offeredAffordance +">.} LIMIT 1";
-        
-        /* Example SPARQL query 
-         * PREFIX was: <https://was-course.interactions.ics.unisg.ch/farm-ontology#>
-         * PREFIX hmas: <https://purl.org/hmas/>
-         * PREFIX td: <https://www.w3.org/2019/wot/td#>
-         * SELECT ?td WHERE {
-         *   <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-danai#farm-17c04810-567a-4236-b310-611bb4fd2a8c> hmas:contains ?thing.
-         *   ?thing td:hasActionAffordance ?aff.
-         *   ?thing hmas:hasProfile ?td.
-         *   ?aff a <https://was-course.interactions.ics.unisg.ch/farm-ontology#ReadSoilMoistureAffordance>.
-         * } LIMIT 1
-         */
-
-        // executes query
+        // Query to get the thing description (profile) for a tractor offering the specified affordance
+        String queryStr = PREFIXES + "SELECT ?" + tdVariableName + " WHERE {\n" +
+                "<" + farm + "> hmas:contains ?thing.\n" +
+                "?thing td:hasActionAffordance ?aff.\n" +
+                "?thing hmas:hasProfile ?" + tdVariableName + ".\n" +
+                "?aff a <" + offeredAffordance + ">.\n" +
+                "} LIMIT 1";
         JsonArray tdBindings = executeQuery(queryStr);
-
-        /* Example JSON result
-         * [{"td":
-         *  {
-         *   "type":"uri",
-         *   "value":"https://raw.githubusercontent.com/Interactions-HSG/example-tds/was/tds/tractor1.ttl"
-         *  }
-         * }]
-         */
-        
-        // handles result as JSON object
-        JsonObject firstBinding = tdBindings.get(0).getAsJsonObject();
-        JsonObject tdBinding = firstBinding.getAsJsonObject(tdVariableName);
-        tdValue = tdBinding.getAsJsonPrimitive("value").getAsString();
-
-        // sets the value of interest to the OpFeedbackParam
+        if (tdBindings.size() > 0) {
+            JsonObject firstBinding = tdBindings.get(0).getAsJsonObject();
+            JsonObject tdBinding = firstBinding.getAsJsonObject(tdVariableName);
+            tdValue = tdBinding.getAsJsonPrimitive("value").getAsString();
+        } else {
+            tdValue = "No TD found";
+        }
         thingDescription.set(tdValue);
     }
 
     @OPERATION
     public void queryFarmSections(String farm, OpFeedbackParam<Object[]> sections) {
-        // the variable where we will store the result to be returned to the agent
-        Object[] sectionsValue = new Object[]{ "fakeSection1", "fakeSection2", "fakeSection3", "fakeSection4" };
-
-        // sets the value of interest to the OpFeedbackParam
-        sections.set(sectionsValue);
+        // Query to retrieve all land sections of the given farm
+        String queryStr = PREFIXES + "SELECT ?section WHERE { <" + farm + "> was:hasLandSection ?section. }";
+        JsonArray bindings = executeQuery(queryStr);
+        Object[] result = new Object[bindings.size()];
+        for (int i = 0; i < bindings.size(); i++) {
+            JsonObject binding = bindings.get(i).getAsJsonObject();
+            String section = binding.getAsJsonObject("section").getAsJsonPrimitive("value").getAsString();
+            result[i] = section;
+        }
+        sections.set(result);
     }
 
     @OPERATION
     public void querySectionCoordinates(String section, OpFeedbackParam<Object[]> coordinates) {
-        // the variable where we will store the result to be returned to the agent
-        Object[] coordinatesValue = new Object[]{ 0, 0, 1, 1 };
-
-        // sets the value of interest to the OpFeedbackParam
-        coordinates.set(coordinatesValue);
+        // Query to retrieve the coordinates for the given land section
+        String queryStr = PREFIXES + "SELECT ?x1 ?y1 ?x2 ?y2 WHERE { <" + section + "> was:hasCoordinates ?coords. " +
+                "?coords was:hasCoordinateX1 ?x1; " +
+                "was:hasCoordinateY1 ?y1; " +
+                "was:hasCoordinateX2 ?x2; " +
+                "was:hasCoordinateY2 ?y2. }";
+        JsonArray bindings = executeQuery(queryStr);
+        Object[] result;
+        if (bindings.size() > 0) {
+            JsonObject binding = bindings.get(0).getAsJsonObject();
+            double x1 = binding.getAsJsonObject("x1").getAsJsonPrimitive("value").getAsInt();
+            double y1 = binding.getAsJsonObject("y1").getAsJsonPrimitive("value").getAsInt();
+            double x2 = binding.getAsJsonObject("x2").getAsJsonPrimitive("value").getAsInt();
+            double y2 = binding.getAsJsonObject("y2").getAsJsonPrimitive("value").getAsInt();
+            result = new Object[]{x1, y1, x2, y2};
+        } else {
+            result = new Object[]{"No coordinates found"};
+        }
+        coordinates.set(result);
     }
 
-    @OPERATION 
+    @OPERATION
     public void queryCropOfSection(String section, OpFeedbackParam<String> crop) {
-        // the variable where we will store the result to be returned to the agent
-        String cropValue = "fakeCrop";
-
-        // sets the value of interest to the OpFeedbackParam
+        // Query to get the crop growing in the specified land section
+        String queryStr = PREFIXES + "SELECT ?crop WHERE { <" + section + "> was:hasCrop ?crop. } LIMIT 1";
+        JsonArray bindings = executeQuery(queryStr);
+        String cropValue;
+        if (bindings.size() > 0) {
+            JsonObject binding = bindings.get(0).getAsJsonObject();
+            cropValue = binding.getAsJsonObject("crop").getAsJsonPrimitive("value").getAsString();
+        } else {
+            cropValue = "No crop found";
+        }
         crop.set(cropValue);
     }
 
     @OPERATION
     public void queryRequiredMoisture(String crop, OpFeedbackParam<Integer> level) {
-        // the variable where we will store the result to be returned to the agent
-        Integer moistureLevelValue = 120;
-
-        // sets the value of interest to the OpFeedbackParam
+        // Query to get the required moisture level for the given crop
+        String queryStr = PREFIXES + "SELECT ?level WHERE { <" + crop + "> was:requiredMoistureLevel ?level. } LIMIT 1";
+        JsonArray bindings = executeQuery(queryStr);
+        Integer moistureLevelValue;
+        if (bindings.size() > 0) {
+            JsonObject binding = bindings.get(0).getAsJsonObject();
+            moistureLevelValue = binding.getAsJsonObject("level").getAsJsonPrimitive("value").getAsInt();
+        } else {
+            moistureLevelValue = -1;
+        }
         level.set(moistureLevelValue);
     }
 
     private JsonArray executeQuery(String queryStr) {
-        String queryUrl = this.repoLocation + "?query=" +  URLEncoder.encode(queryStr, StandardCharsets.UTF_8);
-        
+        String queryUrl = this.repoLocation + "?query=" + URLEncoder.encode(queryStr, StandardCharsets.UTF_8);
         try {
             URI uri = new URI(queryUrl);
 
-
-            //TODO: Re-enable authentication when GraphDB repositor
-            // String authString = USERNAME + ":" + PASSWORD;
-            // byte[] authBytes = authString.getBytes(StandardCharsets.UTF_8);
-            // String encodedAuth = Base64.getEncoder().encodeToString(authBytes);
+            // Enable basic authentication
+            String authString = USERNAME + ":" + PASSWORD;
+            byte[] authBytes = authString.getBytes(StandardCharsets.UTF_8);
+            String encodedAuth = Base64.getEncoder().encodeToString(authBytes);
 
             HttpRequest request = HttpRequest.newBuilder()
-                .uri(uri)
-                // .header("Authorization", "Basic " + encodedAuth)
-                .header("Accept", "application/sparql-results+json")
-                .GET()
-                .build();
-             
+                    .uri(uri)
+                    .header("Authorization", "Basic " + encodedAuth)
+                    .header("Accept", "application/sparql-results+json")
+                    .GET()
+                    .build();
+
             HttpClient client = HttpClient.newHttpClient();
             try {
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -188,9 +166,7 @@ public class FarmKG extends Artifact {
                 JsonObject jsonObject = new Gson().fromJson(responseBody, JsonObject.class);
                 JsonArray bindingsArray = jsonObject.getAsJsonObject("results").getAsJsonArray("bindings");
                 return bindingsArray;
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
+            } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
         } catch (URISyntaxException e) {

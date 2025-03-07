@@ -1,7 +1,7 @@
 // moisture_detector agent
 
 // Add your graph repo location below
-repo_location("https://sandbox-graphdb.interactions.ics.unisg.ch/repositories/was-exercise-3-danai").
+repo_location("http://localhost:7200/repositories/joshua-smartfarm").
 
 !start.
 
