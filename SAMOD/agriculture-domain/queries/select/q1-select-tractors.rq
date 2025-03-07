@@ -3,7 +3,7 @@ PREFIX hmas: <https://purl.org/hmas/>
 
 SELECT ?tractor WHERE {
 GRAPH <https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#> {
-   bind (<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#farm-91af956f-7e44-4a79-bce0-dbe0200df00e> as ?farm)
+   bind (<https://sandbox-graphdb.interactions.ics.unisg.ch/was-exercise-3-joshua#farm-bc91aede-bec3-4226-8fc4-2583f71e2abd> as ?farm)
    ?farm a was:Farm.    
    ?farm hmas:contains ?tractor.
    ?tractor a was:Tractor.

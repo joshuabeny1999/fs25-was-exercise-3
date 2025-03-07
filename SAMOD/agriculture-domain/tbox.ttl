@@ -24,6 +24,12 @@ vann:preferredNamespacePrefix rdf:type owl:AnnotationProperty .
 #    Object Properties
 #################################################################
 
+###  https://was-course.interactions.ics.unisg.ch/farm-ontology#hasActionAffordance
+was:hasActionAffordance rdf:type owl:ObjectProperty ;
+                        rdfs:domain was:Tractor ;
+                        rdfs:range was:Affordance .
+
+
 ###  https://was-course.interactions.ics.unisg.ch/farm-ontology#hasCoordinates
 was:hasCoordinates rdf:type owl:ObjectProperty ;
                    rdfs:domain was:LandSection ;
@@ -37,17 +43,17 @@ was:hasCrop rdf:type owl:ObjectProperty ;
             rdfs:comment "Associates a land section with the crop grown on it." .
 
 
+###  https://was-course.interactions.ics.unisg.ch/farm-ontology#hasCurrentSoilMoisture
+was:hasCurrentSoilMoisture rdf:type owl:ObjectProperty ;
+                           rdfs:domain was:Crop ;
+                           rdfs:range was:SoilMoisture .
+
+
 ###  https://was-course.interactions.ics.unisg.ch/farm-ontology#hasLandSection
 was:hasLandSection rdf:type owl:ObjectProperty ;
                    rdfs:domain was:Farm ;
                    rdfs:range was:LandSection ;
                    rdfs:comment "Connects a farm to its individual land sections" .
-
-
-###  https://was-course.interactions.ics.unisg.ch/farm-ontology#hasActionAffordance
-was:hasActionAffordance rdf:type owl:ObjectProperty ;
-                     rdfs:domain was:Tractor ;
-                     rdfs:range was:Affordance .
 
 
 ###  https://was-course.interactions.ics.unisg.ch/farm-ontology#operatedBy
@@ -88,8 +94,15 @@ was:hasCoordinateY2 rdf:type owl:DatatypeProperty ;
                     rdfs:range xsd:decimal .
 
 
+###  https://was-course.interactions.ics.unisg.ch/farm-ontology#moistureValue
+was:moistureValue rdf:type owl:DatatypeProperty ;
+                  rdfs:domain was:SoilMoisture ;
+                  rdfs:range xsd:integer .
+
+
 ###  https://was-course.interactions.ics.unisg.ch/farm-ontology#requiredMoistureLevel
 was:requiredMoistureLevel rdf:type owl:DatatypeProperty ;
+                          rdfs:subPropertyOf was:requiredMoistureLevel ;
                           rdfs:domain was:Crop ;
                           rdfs:range xsd:integer .
 
